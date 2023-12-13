@@ -40,5 +40,12 @@ def index():
 
     return render_template("index.html")
 
+@app.route("/bert", methods=["GET", "POST"])
+def bert():
+     return render_template("bert.html")
+
+@app.route("/svm", methods=["GET", "POST"])
+def svm():
+     return render_template("svm.html")
 if __name__ == "__main__":
     app.run(debug=True)
