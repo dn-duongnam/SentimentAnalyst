@@ -6,6 +6,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.text import tokenizer_from_json
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import numpy as np
+from ner import *
 
 app = Flask(__name__)
 app.secret_key = 'Duong Nam'
@@ -23,7 +24,10 @@ def index():
     if request.method == "POST":
         comment = request.form["comment"]
         if comment:
-            comment_tokenized = ViTokenizer.tokenize(comment)
+            ner_processor = NERProcessor("NlpHUST/ner-vietnamese-electra-base")
+            processed_example = ner_processor.process_text(comment)
+            comment_tokenized = ViTokenizer.tokenize(processed_example)
+            print(comment_tokenized)
             test_seq = loaded_tokenizer.texts_to_sequences([comment_tokenized])
             padded_test_seq = pad_sequences(test_seq, maxlen=107, truncating="post", padding="post")
             predicted_sentiment = model.predict(padded_test_seq)
