@@ -11,9 +11,7 @@ from ner import *
 app = Flask(__name__)
 app.secret_key = 'Duong Nam'
 
-# Load SVM model and TF-IDF vectorizer
-model_path = "model_cnn_bilstm.h5"  # Replace with the actual path to your trained Keras model in HDF5 format
-model = load_model(model_path)
+
 # Load the tokenizer
 with open('tokenizer.json', 'r', encoding='utf-8') as f:
     loaded_tokenizer_json = f.read()
@@ -21,6 +19,7 @@ with open('tokenizer.json', 'r', encoding='utf-8') as f:
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    model = load_model("./static/model/model_cnn_bilstm.h5")
     if request.method == "POST":
         comment = request.form["comment"]
         if comment:
