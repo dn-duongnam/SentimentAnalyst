@@ -1,2 +1,2 @@
-./__pycache__
-./model/phobert/models--vinai--phobert-base
+__pycache__/
+model/phobert/
